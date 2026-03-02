@@ -8,13 +8,13 @@ sidebar_position: 11
 
 ### Status: Draft
 
-### Version: 1.0
+### Version: 1.1
 
 ### Table of Contents
 
 - [HCS-11 Standard: Profile Standard](#hcs-11-standard-profile-standard)
     - [Status: Draft](#status-draft)
-    - [Version: 1.0](#version-10)
+    - [Version: 1.1](#version-11)
     - [Table of Contents](#table-of-contents)
   - [Authors](#authors)
   - [Abstract](#abstract)
@@ -55,6 +55,7 @@ sidebar_position: 11
       - [Social Media Platforms](#social-media-platforms)
     - [Example Profiles](#example-profiles)
   - [Conclusion](#conclusion)
+  - [Changelog](#changelog)
 
 ## Authors
 
@@ -301,6 +302,13 @@ Flora profiles **shall** set their `type` field to `3` and reference the Flora a
 | mcpServer.maintainer         | string   | No       | Organization maintaining this MCP server           |
 | mcpServer.repository         | string   | No       | URL to source code repository                       |
 | mcpServer.docs               | string   | No       | URL to server documentation                         |
+| mcpServer.protocolVersion   | string   | No       | MCP protocol version supported (e.g., "2024-11-05") for client compatibility checks |
+| mcpServer.license           | string   | No       | SPDX license identifier (e.g., "Apache-2.0", "MIT")                              |
+| mcpServer.deprecated        | boolean  | No       | If true, server is deprecated; clients MAY warn or steer users to alternatives      |
+| mcpServer.deprecationMessage | string  | No       | Human-readable deprecation notice or sunset date when deprecated is true             |
+| mcpServer.securityPolicyUrl | string   | No       | URL for vulnerability disclosure (e.g., SECURITY.md or dedicated policy page)     |
+| mcpServer.authentication    | string   | No       | Auth requirement: "none", "api_key", "oauth2", or implementation-defined value       |
+| mcpServer.tags              | string[] | No       | Discovery tags (e.g., "hedera", "blockchain") for filtering and search             |
 
 #### MCP Server Verification Process
 
@@ -1089,3 +1097,12 @@ MCP Server Profile with UAID:
 ## Conclusion
 
 The HCS-11 standard provides a simple, extensible framework for managing profiles on Hedera. With built-in versioning and a flexible structure, it supports diverse use cases while maintaining compatibility as the standard evolves.
+
+## Changelog
+
+_This revision (1.1) is a Clarification per [HCS-4 Change Management](hcs-4.md#change-management): optional schema extensions only; no change to existing conformance requirements._
+
+| Version | Date       | Description |
+| ------- | ---------- | ----------- |
+| 1.1     | (pending)  | Added optional MCP server profile fields: `protocolVersion`, `license`, `deprecated`, `deprecationMessage`, `securityPolicyUrl`, `authentication`, `tags`. |
+| 1.0     | —          | Initial draft. |
