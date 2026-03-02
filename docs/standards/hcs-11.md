@@ -1100,7 +1100,7 @@ The HCS-11 standard provides a simple, extensible framework for managing profile
 
 ## Changelog
 
-_This revision (1.1) is a Clarification per [HCS-4 Change Management](hcs-4.md#change-management): optional schema extensions only; no change to existing conformance requirements._
+_This revision (1.0.1) is a Clarification per [HCS-4 Change Management](hcs-4.md#change-management): optional schema extensions only; no change to existing conformance requirements._
 
 | Version | Date       | Description |
 | ------- | ---------- | ----------- |
