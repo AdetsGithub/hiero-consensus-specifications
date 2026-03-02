@@ -51,6 +51,8 @@ sidebar_position: 11
       - [Profile Image Types](#profile-image-types)
       - [AI Agent Capabilities](#ai-agent-capabilities)
       - [MCP Server Capabilities](#mcp-server-capabilities)
+      - [MCP Server Authentication](#mcp-server-authentication)
+      - [MCP Server Tags](#mcp-server-tags)
     - [Predefined Arrays](#predefined-arrays)
       - [Social Media Platforms](#social-media-platforms)
     - [Example Profiles](#example-profiles)
@@ -307,8 +309,8 @@ Flora profiles **shall** set their `type` field to `3` and reference the Flora a
 | mcpServer.deprecated        | boolean  | No       | If true, server is deprecated; clients MAY warn or steer users to alternatives      |
 | mcpServer.deprecationMessage | string  | No       | Human-readable deprecation notice or sunset date when deprecated is true             |
 | mcpServer.securityPolicyUrl | string   | No       | URL for vulnerability disclosure (e.g., SECURITY.md or dedicated policy page)     |
-| mcpServer.authentication    | string   | No       | Auth requirement: "none", "api_key", "oauth2", or implementation-defined value       |
-| mcpServer.tags              | string[] | No       | Discovery tags (e.g., "hedera", "blockchain") for filtering and search             |
+| mcpServer.authentication    | number   | No       | Authentication method enum (see [MCP Server Authentication](#mcp-server-authentication)) |
+| mcpServer.tags              | number[] | No       | Discovery tags: HCS-14 skill IDs (0–39) and/or OASF skill IDs (100+); see [MCP Server Tags](#mcp-server-tags) and [HCS-14 OASF Skills Integration](../hcs-14/index.md#oasf-skills-integration-100-informative) |
 
 #### MCP Server Verification Process
 
@@ -959,6 +961,28 @@ _This enum lists the service types that MCP servers can offer, based on the actu
 | 13    | Calendar/Schedule          | Provides access to calendar events, scheduling, and time management                      |
 | 14    | Search                     | Offers specialized search capabilities across various data sources                       |
 | 15    | Assistant Orchestration    | Manages interactions between multiple AI assistants or services                          |
+
+#### MCP Server Authentication
+
+_This enum defines the authentication methods an MCP server may require. Using a numeric enum keeps the payload small when profiles are stored on-chain._
+
+| Value | Description                                                                 |
+| ----- | --------------------------------------------------------------------------- |
+| 0     | None - no authentication required                                           |
+| 1     | API key - client supplies an API key                                        |
+| 2     | OAuth 2 - OAuth2 or OIDC                                                    |
+| 3     | Other - implementation-defined; document in server docs or profile `properties` |
+
+#### MCP Server Tags
+
+_For discovery and filtering, `mcpServer.tags` uses the same enumerated namespace as [HCS-14 Agent Skills](../hcs-14/index.md#agent-skills):_
+
+- **0–39**: [HCS-14 Core and Protocol-Specific Skills](../hcs-14/index.md#core-skills-0-19) (e.g. Text Generation, Code Generation, API Integration).
+- **100+**: [OASF Skills](https://schema.oasf.outshift.com/skill_categories) (Open Agentic Schema Framework), as used in [HCS-14 OASF Skills Integration (100+) (Informative)](../hcs-14/index.md#oasf-skills-integration-100-informative).
+
+Implementations SHOULD use numeric skill/category IDs in the `tags` array rather than free-form strings, so payloads stay small on-chain and align with HCS-14 and OASF registries. The array MAY be sorted numerically in ascending order for consistency with HCS-14.
+
+**Example:** `"tags": [0, 17, 10102, 1403]` (HCS-14 Text Generation, API Integration; OASF Text Generation, API Integration).
 
 ### Predefined Arrays
 
